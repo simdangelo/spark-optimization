@@ -1,4 +1,4 @@
-package part3dfjoins
+package part3dfjoins_original
 
 import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
 import org.apache.spark.sql.{DataFrame, Row, SparkSession}
@@ -9,6 +9,7 @@ object BroadcastJoins {
   val spark = SparkSession.builder()
     .appName("Broadcast Joins")
     .master("local")
+    .config("spark.sql.adaptive.enabled", "false")
     .getOrCreate()
 
   val sc = spark.sparkContext
@@ -34,22 +35,22 @@ object BroadcastJoins {
   // the innocent join
   val joined = table.join(lookupTable, "id")
   joined.explain
-  // joined.show - takes an ice age
+  joined.show //- takes an ice age
 
   // a smarter join
   val joinedSmart = table.join(broadcast(lookupTable), "id")
-  joinedSmart.explain()
-  // joinedSmart.show()
+//  joinedSmart.explain()
+//  joinedSmart.show()
 
   // auto-broadcast detection
   val bigTable = spark.range(1, 100000000)
   val smallTable = spark.range(1, 10000) // size estimated by Spark - auto-broadcast
-  val joinedNumbers = smallTable.join(bigTable, "id")
+  val joinedNumbers = bigTable.join(smallTable, "id")
 
   // deactivate auto-broadcast
   spark.conf.set("spark.sql.autoBroadcastJoinThreshold", -1)
 
-  joinedNumbers.explain()
+//  joinedNumbers.explain()
 
   def main(args: Array[String]): Unit = {
     Thread.sleep(1000000)
