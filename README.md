@@ -1,3 +1,7 @@
+This repository contains the code I developed while following Daniel Ciocîrlan's online course **Spark Optimization with Scala**, step by step. The course provided comprehensive guidance on some of the most famous and effective techniques to optimize Spark Jobs using Scala API, and this code serves as a practical implementation of the concepts covered.
+
+For the sake of completeness, below is the official README.md file in Daniel's repository with instructions on how best to execute the code.
+
 # The official repository for the Rock the JVM Spark Optimization with Scala course
 
 Powered by [Rock the JVM!](rockthejvm.com)
